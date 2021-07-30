@@ -15,9 +15,10 @@ it('can create storage', async() => {
   let tokenId = 1;
   let instance = await CarbonStorage.deployed();
   await instance.createStorage(capacity, tokenId, facility, {from: accounts[0]});
-  const result = await instance.tokenIdToStorageInfo.call(tokenId);
-  assert.equal(result.facility, 'Amsterdam');
-  assert.equal(result.capacity.words[0], 20000);
+  const result = await instance.lookUpTokenIdToStorageInfo(tokenId);
+  assert.equal(result[0], 'Amsterdam');
+  assert.equal(result[1].words[0], 20000);
+  assert.equal(result[3], accounts[0]);
 });
 
 it('lets user1 list their storage for sale', async() => {

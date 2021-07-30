@@ -1,1 +1,36 @@
-<!--TODO a simple html frontend that allows interaction with web3-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CarbonCapture DAPP</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  </head>
+  <style>
+    input {
+      display: block;
+      margin-bottom: 12px;
+    }
+  </style>
+  <body>
+    <h1>Carbon Capture Token DAPP</h1>
+
+    <hr>
+
+    <br>
+      <h1>Create a Storage</h1>
+      <br><label for="storageCapacity">Storage Capacity:</label><input type="text" id="capacity"></input>
+      <br><label for="storageFacility">Storage Facility:</label><input type="text" id="facility"></input>
+      <br><label for="tokenId">Storage ID:</label><input type="text" id="storageId"></input>
+      <br><br><button id="createStorage" onclick="App.createStorage()">Create Storage</button>
+      <br>
+      <hr>
+      <br>
+      <h1>Look up a Storage</h1>
+      <br><label for="name">Storage ID:</label><input type="text" id="lookId"></input>
+      <br><br><button onclick="App.lookUp()">Look Up a Storage</button>
+      <hr>
+      <br>
+      <span id="status"></span>
+      <br>
+    <script src="index.js"></script>
+  </body>
+</html>

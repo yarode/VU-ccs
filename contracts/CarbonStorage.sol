@@ -14,6 +14,7 @@ contract CarbonStorage is ERC721 {
         uint256 capacity;
         uint256 timestamp;
         string facility;
+        address owner;
     }
 
     // Add symbol and name property
@@ -36,7 +37,7 @@ contract CarbonStorage is ERC721 {
     /// @param _tokenId The id of the storage
     /// @param _facility The name of the facility issuing the storage
     function createStorage(uint256 _capacity, uint256 _tokenId, string memory _facility) public {
-      Storage memory newStorage = Storage(_capacity, block.timestamp, _facility);
+      Storage memory newStorage = Storage(_capacity, block.timestamp, _facility, msg.sender);
       tokenIdToStorageInfo[_tokenId] = newStorage;
       _mint(msg.sender, _tokenId);
     }
@@ -61,6 +62,16 @@ contract CarbonStorage is ERC721 {
       if(msg.value > storagePrice) {
         payable(msg.sender).transfer(msg.value - storagePrice);
       }
+      tokenIdToStorageInfo[_tokenId].owner = msg.sender;
+    }
+
+    function lookUpTokenIdToStorageInfo(uint _tokenId) public view returns(string memory, uint256, uint256, address) {
+      string memory facility = tokenIdToStorageInfo[_tokenId].facility;
+      require(keccak256(abi.encodePacked(facility)) != keccak256(abi.encodePacked("")), "No storage with this id");
+      uint256 capacity = tokenIdToStorageInfo[_tokenId].capacity;
+      uint256 timestamp = tokenIdToStorageInfo[_tokenId].timestamp;
+      address owner = tokenIdToStorageInfo[_tokenId].owner;
+      return (facility, capacity, timestamp, owner);
     }
 
 }
